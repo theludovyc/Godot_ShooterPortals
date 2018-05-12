@@ -20,7 +20,17 @@ func _process(delta):
 	update()
 	pass
 
+func _input(event):
+	if event is InputEventMouseMotion:
+		mousePos=event.position
+	pass
+
 func _physics_process(delta):
+	var vec=mousePos-position
+	vec=vec.normalized()
+
+	rotation = vec.angle()
+
 	if Input.is_action_pressed("ui_left"):
 		move.x-=moveSpeed
 		if move.x<-maxSpeed:
@@ -58,16 +68,4 @@ func _physics_process(delta):
 				move.y=0
 
 	move_and_slide(move)
-	pass
-
-func _input(event):
-	if event is InputEventMouseMotion:
-		mousePos=event.position
-	pass
-
-func _draw():
-	var vec=mousePos-position
-	vec=vec.normalized()
-
-	draw_line(24*vec, 54*vec, Color(255, 0, 0), 2)
 	pass
